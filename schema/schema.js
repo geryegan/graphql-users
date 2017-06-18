@@ -6,7 +6,8 @@ const {
     GraphQLString,
     GraphQLInt,
     GraphQLSchema,
-    GraphQLList
+    GraphQLList,
+    GraphQLNonNull
 } = graphql;
 
 const CompanyType = new GraphQLObjectType({
@@ -61,6 +62,23 @@ const RootQuery = new GraphQLObjectType({
                 return axios.get(`http://localhost:3000/companies/${args.id}`)
                     .then(res => res.data);
             } 
+        }
+    }
+});
+
+const mutation = new GraphQLObjectType({
+    name: 'Mutation',
+    fields: {
+        addUser: {
+            type: UserType,
+            args: {
+                firstName: { type: new GraphQLNonNull(GraphQLString) },
+                companyId: { type: new GraphQLNonNull(GraphQLString) },
+                age: { type: GraphQLInt }
+            },
+            resolve() {
+
+            }
         }
     }
 });
